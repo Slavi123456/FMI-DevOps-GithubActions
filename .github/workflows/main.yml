@@ -21,60 +21,6 @@ jobs:
           name: code
           path: . 
           include-hidden-files: true
-  Linting:
-    runs-on: ubuntu-latest
-    needs: [Build] #to make it dependent to the other job
-    container: gradle:6-jdk11
-    steps:
-      - name: Download code
-        uses: actions/download-artifact@v8
-        with: 
-          name: code
-          path: .
-      - name: Run Linting
-        uses: super-linter/super-linter@v9
-        env: 
-          #To report Github Actions status checks
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          # USE_FIND_ALG means to scan the codebase instead of using git
-          # DEFAULT_BRANCH: main   
-          VALIDATE_ALL_CODEBASE: true
-          USE_FIND_ALGORITHM: true      
-          DISABLE_ERRORS: true
-          SAVE_SUPER_LINTER_SUMMARY: true
-  Docker-image:
-    runs-on: ubuntu-latest
-    needs: [Build]
-    permissions: 
-      packages: write
-    steps:
-      - name: Download the code
-        uses: actions/download-artifact@v8
-        with:
-            name: code
-            path: .name: Main workflow
-on: push
-env:
-  github_username: slavi123456      # ${{ github.actor }} #typically set like this, but docker/oci have restriction on uppercase
-  github_password: ${{ secrets.GITHUB_TOKEN }}  # Must be made available to the workflow
-  GIT_COMMIT: ${{ github.SHA }}
-jobs:
-  Build:
-    runs-on: ubuntu-latest
-    container: gradle:6-jdk11
-    steps:
-      - name: Clone down repository
-        uses: actions/checkout@v7      
-      - name: Build application
-        run: ci/build-app.sh
-      - name: Test
-        run: ci/unit-test-app.sh
-      - name: Upload repo
-        uses: actions/upload-artifact@v7
-        with:  
-          name: code
-          path: . 
-          include-hidden-files: true
   # Linting:
   #   runs-on: ubuntu-latest
   #   needs: [Build] #to make it dependent to the other job
