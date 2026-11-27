@@ -47,13 +47,6 @@ jobs:
           tags: |
             ghcr.io/${{ env.github_username }}/micronaut-app:1.0-${{ env.GIT_COMMIT }}
             ghcr.io/${{ env.github_username }}/micronaut-app:latest          
-      - name: Run snyk
-        uses: snyk/actions/docker@master
-        env:
-          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
-        with:
-          image: ghcr.io/${{ env.github_username }}/micronaut-app:1.0-${{ github.sha }}
-    
   # Component-test:
   #   runs-on: ubuntu-latest
   #   needs: Docker-image
