@@ -36,6 +36,6 @@ jobs:
           # DEFAULT_BRANCH: main   
           VALIDATE_ALL_CODEBASE: true
           USE_FIND_ALGORITHM: true
-          DISABLE_ERRORS: true
+          #DISABLE_ERRORS: true
           SAVE_SUPER_LINTER_SUMMARY: true
     
