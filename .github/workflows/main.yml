@@ -47,7 +47,6 @@ jobs:
           tags: |
             ghcr.io/${{ env.github_username }}/micronaut-app:1.0-${{ env.GIT_COMMIT }}
             ghcr.io/${{ env.github_username }}/micronaut-app:latest          
-            - name: Run Snyk to check Docker image
       - name: Run snyk
         uses: snyk/actions/docker@master
         env:
