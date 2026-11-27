@@ -69,6 +69,16 @@ jobs:
             path: .
       - name: Performance-test
         run: bash ci/performance-test.sh
+  Security-Snyk:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Run Snyk to check Docker image
+        uses: snyk/actions/docker@master
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+        with:
+          image: ghcr.io/${{ env.github_username }}/micronaut-app:latest          
+        
     
     
   
