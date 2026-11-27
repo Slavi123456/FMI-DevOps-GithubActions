@@ -32,7 +32,8 @@ jobs:
         env: 
           #To report Github Actions status checks
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          DEFAULT_BRANCH: main
+          # USE_FIND_ALG means to scan the codebase instead of using git
+          # DEFAULT_BRANCH: main   
           VALIDATE_ALL_CODEBASE: true
           USE_FIND_ALGORITHM: true
           DISABLE_ERRORS: true
