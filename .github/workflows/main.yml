@@ -72,13 +72,9 @@ jobs:
   Security-Snyk:
     runs-on: ubuntu-latest
     needs: Docker-image
-    steps:
-      - name: Login to Github Container registry
-        uses: docker/login-action@v4
-        with: 
-          registry: ghcr.io
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
+    steps:      
+      - name: Clone down repository
+        uses: actions/checkout@v7      
       - name: Snyk install
         run: |
             curl --compressed https://downloads.snyk.io/cli/stable/snyk-linux -o snyk
