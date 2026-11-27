@@ -76,23 +76,28 @@ jobs:
   #           path: .
   #     - name: Performance-test
   #       run: bash ci/performance-test.sh
-  # Security-Snyk:
-  #   runs-on: ubuntu-latest
-  #   needs: Docker-image
-  #   steps:
-  #     - name: Login to Github Container registry
-  #       uses: docker/login-action@v4
-  #       with: 
-  #         registry: ghcr.io
-  #         username: ${{ github.actor }}
-  #         password: ${{ secrets.GITHUB_TOKEN }}
-  #     - name: Run Snyk to check Docker image
-  #       uses: snyk/actions/docker@master
-  #       env:
-  #         SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
-  #       with:
-  #         image: ghcr.io/${{ env.github_username }}/micronaut-app:1.0-${{ github.sha }}
-        
+  Security-Snyk:
+    runs-on: ubuntu-latest
+    needs: Docker-image
+    steps:
+      - name: Login to Github Container registry
+        uses: docker/login-action@v4
+        with: 
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Snyk install
+        run: |
+            curl --compressed https://downloads.snyk.io/cli/stable/snyk-linux -o snyk
+            chmod +x ./snyk
+            mv ./snyk /usr/local/bin/
+      - name: Snyk Auth
+        run: snyk auth ${{secrets.SNYK_TOKEN}}
+      - name: Test Snyk
+        run: snyk test --all-projects
+            
+             
+          
     
     
   
